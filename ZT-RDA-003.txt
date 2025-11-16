@@ -1,0 +1,58 @@
+╔═════════════════════════════════════════════════════════════╗
+║   ZT-SCC-003: Cloud Misconfiguration & IAM Role Exploitation║
+║   Zero Trust Incident Response Orchestration Engine         ║
+╚═════════════════════════════════════════════════════════════╝
+
+# 1. Context & Scope
+Defines a Zero Trust–aligned incident response orchestration engine to simulate, detect, and respond to an attack exploiting a common cloud misconfiguration: an overly permissive IAM (Identity and Access Management) role. The simulation focuses on an attacker leveraging this role to move laterally, access sensitive data in cloud storage, and exfiltrate it. Scope: Simulation in an isolated/test cloud account (AWS/GCP/Azure). Alignment: NIST SP 800-207, Cloud Security Alliance (CSA) Cloud Controls Matrix (CCM), CIS Benchmarks for Cloud.
+
+# 2. Objective
+Design and run a safe, measurable adversary emulation mapped to MITRE ATT&CK for Cloud to: validate cloud-native Zero Trust controls (e.g., just-in-time access, identity-based segmentation), measure detection coverage of CloudTrail/VPC Flow Logs/GuardDuty, exercise cloud-specific SOAR playbooks, and produce audit-ready evidence of cloud security posture testing.
+
+# 3. Input Specifications
+- attack_scenario: 'cloud_iam_exploitation'
+- cloud_provider: enum ['AWS','GCP','Azure']
+- mitre_attack_techniques: ['T1078.004','T1538','T1021.007','T1567.002']
+- target_assets: { compute_instance_id: 'string', overly_permissive_iam_role_arn: 'string', sensitive_data_bucket_name: 'string' }
+- aggressiveness_level: enum ['stealthy','balanced','noisy']
+- environment: enum ['isolated_test','staging']
+- security_telemetry_sources: { CloudTrail/AuditLogs, VPC_Flow_Logs, GuardDuty/SecurityCenter, CSPM_tool_endpoint + tokens }
+- zero_trust_architecture_config: { Cloud_IdP_endpoint, Cloud_PEP_list (e.g., Security Groups), Cloud_PDP_endpoint }
+- compliance_requirements: array ['NIST SP 800-207','CSA CCM','CIS Benchmarks']
+
+# 4. Constraints & Guardrails
+- Ethical: No impact on production cloud workloads. Use a dedicated, non-production account. Use synthetic "sensitive" data (e.g., files named `customer_data_simulation.csv`).
+- Regulatory: Actions must align with data residency and privacy rules applicable to the test environment.
+- Technical: Simulation API calls must not exceed cloud provider rate limits. Automated response actions (e.g., modifying a Security Group) must have a tested rollback plan.
+- Operational: All simulated resources must be tagged for easy identification and cleanup.
+
+# 5. Reasoning Framework
+- 5.1 Pre-Simulation Validation: Validate cloud credentials and permissions. Confirm reachability of target assets. Use CSPM tool to baseline the posture of the target IAM role and S3 bucket.
+- 5.2 Attack Simulation Execution:
+  - Stage 1 (Initial Access) T1078.004 Cloud Credentials: Simulate an attacker gaining access to credentials for the `overly_permissive_iam_role_arn` on the `compute_instance_id`.
+  - Stage 2 (Discovery) T1538 Cloud Service Dashboard: Simulate the attacker running discovery commands (e.g., `aws s3 ls`, `aws ec2 describe-instances`) to map the environment.
+  - Stage 3 (Lateral Movement) T1021.007 Cloud Services: Attacker uses the permissive role to access the `sensitive_data_bucket_name`.
+  - Stage 4 (Exfiltration) T1567.002 Exfiltration to Cloud Storage: Attacker copies synthetic data from the target bucket to an external, attacker-controlled (simulated) bucket.
+- 5.3 Automated Incident Response Orchestration:
+  - Ingest cloud-native alerts (GuardDuty, Security Center) into SOAR.
+  - Execute playbooks: `cloud_iam_revoke_session`, `cloud_sg_deny_ip`, `cloud_s3_bucket_policy_harden`.
+  - Require human approval to quarantine the EC2 instance.
+- 5.4 Zero Trust Maturity Scoring: Score maturity based on detection of anomalous API calls, enforcement of least-privilege IAM policies, and speed of automated containment.
+- 5.5 Compliance Documentation Generation: Generate reports mapping simulation results to specific CIS Benchmark and CSA CCM controls.
+- 5.6 Final Output Assembly: Compile all results into the standard JSON format.
+
+# 6. Output Format & Validation
+Produce a single, comprehensive JSON object as specified in the detailed schema.
+
+# 7. Failure Mode Handling
+- CLOUD_PERMISSION_DENIED: Abort if initial credentials lack necessary permissions for simulation.
+- API_RATE_LIMITING: Pause and retry with exponential backoff if cloud provider API rate limits are hit.
+
+# 8. References
+[1] MITRE ATT&CK for Cloud, [2] CSA Cloud Controls Matrix, [3] CIS Benchmarks for AWS/GCP/Azure
+
+# 9. Notes & Assumptions
+This simulation assumes a pre-existing misconfigured IAM role for testing purposes.
+
+> [!warning] Safety
+> Run this simulation ONLY in a non-production, isolated cloud account. Ensure you have permissions to create and destroy resources.
