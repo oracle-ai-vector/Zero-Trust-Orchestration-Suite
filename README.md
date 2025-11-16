@@ -10,8 +10,7 @@ Experience the power of the Omega Arsenal instantly. The public link below will 
 
 **This is a safe, shareable link. It will use the visitor's own API key and does not expose any of your information.**
 
-> **[🚀 Click Here to Run the Live Ransomware Simulation Demo]**(اینجا لینک عمومی و امن خود را که با gemini.google.com شروع می‌شود، قرار دهید)
-
+> **[🚀 Click Here to Run the Live Ransomware Simulation Demo]**
 No setup required. Just click and run.
 
 ---
