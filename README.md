@@ -2,25 +2,25 @@
 
 An enterprise-grade collection of advanced LLM prompts for generating comprehensive, audit-ready Zero Trust attack simulation plans. This framework allows security teams to validate their controls against sophisticated attack vectors in minutes, not weeks.
 
----
-
-### **Interactive Live Fire Demo**
-
-Experience the power of the Omega Arsenal instantly. The public link below will open a secure, read-only version of the `ZT-RDA-001` prompt in Google's Gemini interface for immediate execution.
-
-**This is a safe, shareable link. It will use the visitor's own API key and does not expose any of your information.**
-
-> **[🚀 Click Here to Run the Live Ransomware Simulation Demo]**
-No setup required. Just click and run.
+This repository contains fully functional, platform-agnostic demo prompts from the full suite.
 
 ---
 
-### **Static Prompt Files for Other Platforms**
+### **How to Use the Demos**
 
-For use with other platforms (like Claude, Perplexity, or local models), the raw prompt files are available below:
+1.  **Select a prompt file** (`.txt`) from this repository.
+2.  **Copy the entire content** of the file.
+3.  **Paste it into any capable Large Language Model** (e.g., GPT-4o, Claude 3 Opus, Gemini 1.5 Pro, or local models).
+4.  **Execute and analyze the output.**
 
-- **`ZT-RDA-001.txt`**: Simulates a classic ransomware lateral movement attack targeting Active Directory.
-- **`ZT-SCC-003.txt`**: Simulates a cloud IAM role exploitation scenario leading to data exfiltration.
+The power is in the text itself, not the platform.
+
+---
+
+### **Available Demos**
+
+-   **`ZT-RDA-001.txt`**: Simulates a classic ransomware lateral movement attack targeting Active Directory.
+-   **`ZT-SCC-003.txt`**: Simulates a cloud IAM role exploitation scenario leading to data exfiltration.
 
 ---
 
