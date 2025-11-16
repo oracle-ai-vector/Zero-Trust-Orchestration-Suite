@@ -6,9 +6,11 @@ An enterprise-grade collection of advanced LLM prompts for generating comprehens
 
 ### **Interactive Live Fire Demo**
 
-Experience the power of the Omega Arsenal instantly. The link below will open the `ZT-RDA-001` prompt directly in your Google AI Studio environment for immediate execution.
+Experience the power of the Omega Arsenal instantly. The public link below will open a secure, read-only version of the `ZT-RDA-001` prompt in Google's Gemini interface for immediate execution.
 
-> **[🚀 Click Here to Run the Live Ransomware Simulation Demo in Google AI Studio]**(https://ai.studio/apps/drive/1fN-nYNCHPakSwX6SQUEYtipGkMn8mPl3)
+**This is a safe, shareable link. It will use the visitor's own API key and does not expose any of your information.**
+
+> **[🚀 Click Here to Run the Live Ransomware Simulation Demo]**(اینجا لینک عمومی و امن خود را که با gemini.google.com شروع می‌شود، قرار دهید)
 
 No setup required. Just click and run.
 
